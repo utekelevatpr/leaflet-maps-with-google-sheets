@@ -641,16 +641,7 @@ $(window).on('load', function() {
     }
 
     // Add Mapzen search control
-    if (getSetting('_mapSearch') !== 'off') {
-      L.control.geocoder(getSetting('_mapSearchKey'), {
-        focus: true,
-        position: getSetting('_mapSearch'),
-        zoom: trySetting('_mapSearchZoom', 12),
-        circle: true,
-        circleRadius: trySetting('_mapSearchCircleRadius', 1),
-        autocomplete: true,
-      }).addTo(map);
-    }
+
 
     // Add location control
     if (getSetting('_mapMyLocation') !== 'off') {
