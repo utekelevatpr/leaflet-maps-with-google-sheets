@@ -642,41 +642,14 @@ $(window).on('load', function() {
 
     // Add Mapzen search control
     if (getSetting('_mapSearch') !== 'off') {
-     var GooglePlacesSearchBox = L.Control.extend({
-  onAdd: function() {
-    var element = document.createElement("input");
-    element.id = "searchBox";
-    return element;
-  }
-});
-(new GooglePlacesSearchBox).addTo(map);
-
-var input = document.getElementById("searchBox");
-var searchBox = new google.maps.places.SearchBox(input);
-
-searchBox.addListener('places_changed', function() {
-  var places = searchBox.getPlaces();
-
-  if (places.length == 0) {
-    return;
-  }
-
-  var group = L.featureGroup();
-
-  places.forEach(function(place) {
-
-    // Create a marker for each place.
-    var marker = L.marker([
-      place.geometry.location.lat(),
-      place.geometry.location.lng()
-    ]);
-    group.addLayer(marker);
-  });
-
-  group.addTo(map);
-  map.fitBounds(group.getBounds());
-
-});
+      L.control.geocoder(getSetting('_mapSearchKey'), {
+        focus: true,
+        position: getSetting('_mapSearch'),
+        zoom: trySetting('_mapSearchZoom', 12),
+        circle: true,
+        circleRadius: trySetting('_mapSearchCircleRadius', 1),
+        autocomplete: true,
+      }).addTo(map);
     }
 
     // Add location control
